@@ -746,3 +746,5 @@ This implementation provides:
 - [SECURITY.md](./SECURITY.md) — Security policies, vulnerability disclosure procedures, and arbiter assumptions.
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — Contributor checklist, testing guidelines, and conventional commits.
 
+
+<!-- Verified: 2026-10-01 — all referenced files exist (per issue #1368) -->
