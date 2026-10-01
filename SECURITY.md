@@ -25,9 +25,14 @@
 
 ## Content Security Policy (CSP)
 
-The frontend build injects a `Content-Security-Policy-Report-Only` meta tag via `frontend/vite.config.ts`.
+> ⚠️ **Documentation drift (corrected in this commit):** this section previously
+> described a `cspDirectives` array and `cspPlugin()` in `frontend/vite.config.ts`.
+> As of the current codebase, that plugin is **not present** in `frontend/vite.config.ts`
+> (the file imports only `react()` + `VitePWA()` plugins). The CSP policy documented
+> here is the **intended** policy; it must be re-implemented in the frontend build
+> before it actually takes effect. Tracking issue: #1381.
 
-### Current policy
+### Intended policy (not yet wired into the build)
 
 ```
 default-src 'self';
@@ -41,52 +46,13 @@ base-uri    'self';
 form-action 'self';
 ```
 
-### Report-only mode
+### Re-implementing the policy
 
-The policy is currently deployed in **report-only mode** (`Content-Security-Policy-Report-Only`).
-Violations are logged to the browser console but do **not** block any functionality.
-Once no violations are observed in staging, the meta tag should be upgraded to
-`Content-Security-Policy` to enforce the policy.
-
-### Updating the policy
-
-Edit the `cspDirectives` array in `frontend/vite.config.ts` → `cspPlugin()`.
-After any change, verify there are no new console violations before promoting to production.
-
-### Worked Example: Verifying CSP Report-Only Mode Locally
-
-Before deploying changes to `cspDirectives` in `frontend/vite.config.ts`, verify that violations are captured in report-only mode without blocking resources.
-
-1. **Start the frontend application:**
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-   *Expected output:*
-   ```text
-     VITE v5.4.2  ready in 320 ms
-
-     ➜  Local:   http://localhost:5173/
-     ➜  Network: use --host to expose
-   ```
-
-2. **Inspect the rendered meta tag using curl:**
-   ```bash
-   curl -s http://localhost:5173/ | grep -i "content-security-policy"
-   ```
-   *Expected output:*
-   ```html
-   <meta http-equiv="Content-Security-Policy-Report-Only" content="default-src 'self'; connect-src 'self' https://rpc-futurenet.stellar.org https://api.github.com; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
-   ```
-
-3. **Verify console behavior:**
-   - Open Chrome DevTools (`F12`) -> Navigate to **Console**.
-   - If an unauthorized script/image is evaluated, the browser outputs:
-     ```text
-     [Report Only] Refused to load the script 'https://untrusted-cdn.example.com/analytics.js' because it violates the following Content Security Policy directive: "script-src 'self'".
-     ```
-   - Notice that the script is flagged for audit without breaking the user experience.
-
+When CSP is re-wired into the build, the `cspDirectives` array should live in
+`frontend/vite.config.ts` (the most natural place for Vite build-time meta tag
+injection). Until then, **no `Content-Security-Policy-Report-Only` meta tag is
+emitted by the frontend build** — the policy is documented for future
+implementation only.
 
 ---
 
