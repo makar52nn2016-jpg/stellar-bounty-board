@@ -15,6 +15,7 @@ import {
   stopRecurringBountyScheduler,
 } from "./services/recurringBountySchedules";
 import { getOperationalConfig } from "./config";
+import { validateGitHubWebhookSecret } from "./validation/webhookSecretValidation";
 
 const port = Number(process.env.PORT ?? 3001);
 const keepAliveTimeout = Number(process.env.KEEP_ALIVE_TIMEOUT ?? 65000);
@@ -27,6 +28,9 @@ logStructured("info", "operational_config", {
   rateLimitReadMax: operationalConfig.rateLimitReadMax,
   rateLimitMutationMax: operationalConfig.rateLimitMutationMax,
 });
+
+// Validate critical environment variables before starting the server
+validateGitHubWebhookSecret();
 
 const server = app.listen(port, () => {
   logStructured("info", "server_listen", { port, keepAliveTimeout, headersTimeout });

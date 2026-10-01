@@ -366,3 +366,7 @@ All updates to secret validation logic and associated tests must adhere to the s
 - [GitHub Webhook Security](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks)
 - [HMAC-SHA256 Verification](https://nodejs.org/api/crypto.html#crypto_class_hmac)
 - [Environment Variables Best Practices](https://12factor.net/config)
+
+<!-- Verified: 2026-10-01 — found DRIFT: validateGitHubWebhookSecret() was defined but
+     NOT called in index.ts. Fixed in this PR by adding the import + call before app.listen.
+     Now matches the documented behavior (per issue #1387) -->
