@@ -114,3 +114,5 @@ All pull requests modifying security-sensitive code must follow the single canon
 - [WEBHOOK_SECRET_VALIDATION.md](./WEBHOOK_SECRET_VALIDATION.md) — Environment variable startup validation and secret management.
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — Contributor checklist, conventional commits, and local test requirements.
 
+
+<!-- Verified: 2026-10-01 — all referenced files exist + checks match current codebase (per issue #1384) -->
