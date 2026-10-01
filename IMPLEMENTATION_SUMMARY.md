@@ -389,3 +389,5 @@ This worked example demonstrates how to execute the test suite for `validateGitH
 - [Node.js Crypto Module](https://nodejs.org/api/crypto.html)
 - [12 Factor App - Config](https://12factor.net/config)
 - [OWASP - Secrets Management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+
+<!-- Verified: 2026-10-01 — all referenced files exist (per issue #1371) -->
